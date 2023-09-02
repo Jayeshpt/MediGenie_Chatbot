@@ -7,6 +7,8 @@ __pycache__/
 *.so
 medienv
 __pycache__
+media
+.env
 # Distribution / packaging
 .Python
 build/
