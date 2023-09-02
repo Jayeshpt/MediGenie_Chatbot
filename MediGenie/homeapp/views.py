@@ -250,3 +250,10 @@ def get_response(request):
         return response  # Return the JSON response directly
 
     return JsonResponse({"error": "Invalid request method"})
+
+
+ #--------------------------------------------------- Help section ------------------------------------------------------------
+def how_to_use(request):
+    return render(request,'instruction.html')
+def prompts(request):
+    return render(request,'Prompts.html')
