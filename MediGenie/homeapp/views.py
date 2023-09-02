@@ -48,3 +48,29 @@ def upload_file(request):
     return render(request, 'upload.html')
 
 ###----------------------------------------------------- End of File upload and Accespting --------------------------------------------------
+### ----------------------------------------------------- Dataset Printing -------------------------------------------------------------------
+
+def read_data_from_file1(file_path):
+    if file_path.endswith('.csv'):
+        data = pd.read_csv(file_path)
+    elif file_path.endswith('.xlsx') or file_path.endswith('.xls'):
+        data = pd.read_excel(file_path)
+    else:
+        raise ValueError("Unsupported file format")
+
+    return data
+
+
+def get_most_recent_file():
+    media_folder = os.path.join(settings.MEDIA_ROOT)
+    files = [f for f in os.listdir(media_folder) if os.path.isfile(os.path.join(media_folder, f))]
+    most_recent_file = max(files, key=lambda f: os.path.getmtime(os.path.join(media_folder, f)))
+    return os.path.join(media_folder, most_recent_file)
+
+def show_data(request):
+    file_path = get_most_recent_file()
+    data = read_data_from_file1(file_path)
+    context = {'data': data}
+    return render(request, 'data_display.html', context)
+
+###----------------------------------------------------- End of Dataset Printing -------------------------------------------------------------
