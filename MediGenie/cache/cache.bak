@@ -1,2 +1,3 @@
 'What is the max age of patients?', (0, 30)
 'Give details that the patient age == 95.', (512, 34)
+'Which is the most frequent address?', (1024, 52)

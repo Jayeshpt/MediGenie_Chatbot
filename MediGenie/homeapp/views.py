@@ -205,6 +205,7 @@ def process_question(input_sentence):
             data = read_data_from_file1(file_path)  # Replace with your data loading logic
 
             # Step 4: Forward the question to the question answering model (using PandasAI)
+
             API_key="{API_key}"
             llm = Starcoder(api_token=API_key)
             pandas_ai = PandasAI(llm, conversational=False, verbose=True)
