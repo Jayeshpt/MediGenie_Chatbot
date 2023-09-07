@@ -4,12 +4,6 @@
 
 <head>
     <title>MidGenie</title>
-    <!-- HTML5 Shim and Respond.js IE9 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-      <![endif]-->
     <!-- Meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -34,6 +28,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css'%}">
     
     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/jquery.mCustomScrollbar.css'%}">
+    
 
 </head>
 
@@ -161,41 +156,152 @@
                             </div>
                         </nav>
                         <div class="pcoded-content">
-                            <div class="pcoded-inner-content">
-                                <div class="main-body">
+                            <div style="padding-top: 20px;">
+                                <h2 style="text-align: center;">Graphical Representation of Your data</h2>
+                            </div>
+                            <div class="pcoded-inner-content" style="padding-top: 30px;" >
+                                <div class="container">
                                     
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="card" data-toggle="modal" data-target="#piePlotModal">
+                                                <img src="{{ '/media/plots/pie_plot.png' }}" alt="CSV Data Pie Plot" class="card-img-top img-fluid">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Gender Statistics</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card" data-toggle="modal" data-target="#barPlotModal">
+                                                <img src="{{ '/media/plots/bar_plot.png' }}" alt="CSV Data Bar Plot" class="card-img-top img-fluid">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Doctor Department Statistics</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card" data-toggle="modal" data-target="#diseasePlotModal">
+                                                <img src="{{ '/media/plots/Disease_plot.png' }}" alt="CSV Data Disease Plot" class="card-img-top img-fluid" style="max-height: 207px;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Disease Statistics</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card" data-toggle="modal" data-target="#medicinePlotModal">
+                                                <img src="{{ '/media/plots/Medicine_plot.png' }}" alt="CSV Data Disease Plot" class="card-img-top img-fluid" style="max-height: 207px;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">medicine Statistics</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card" data-toggle="modal" data-target="#agePlotModal">
+                                                <img src="{{ '/media/plots/Age_plot.png' }}" alt="CSV Data Disease Plot" class="card-img-top img-fluid" style="max-height: 207px;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Age Statistics</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card" data-toggle="modal" data-target="#medimanuPlotModal">
+                                                <img src="{{ '/media/plots/medimanu_plot.png' }}" alt="CSV Data Disease Plot" class="card-img-top img-fluid" style="max-height: 207px;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">MedicineManufacturer Statistics</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
                                 </div>
+                            
+                                <!-- Modal for Pie Plot -->
+                                <div class="modal fade" id="piePlotModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <img src="{{ '/media/plots/pie_plot.png' }}" alt="CSV Data Pie Plot" class="img-fluid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <!-- Modal for Bar Plot -->
+                                <div class="modal fade" id="barPlotModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <img src="{{ '/media/plots/bar_plot.png' }}" alt="CSV Data Bar Plot" class="img-fluid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <!-- Modal for Disease Plot -->
+                                <div class="modal fade" id="diseasePlotModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <img src="{{ '/media/plots/Disease_plot.png' }}" alt="CSV Data Disease Plot" class="img-fluid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal for Disease Plot -->
+                                <div class="modal fade" id="diseasePlotModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <img src="{{ '/media/plots/Disease_plot.png' }}" alt="CSV Data Disease Plot" class="img-fluid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Modal for Medicine_plot.png -->
+                                <div class="modal fade" id="medicinePlotModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <img src="{{ '/media/plots/medicine_plot.png' }}" alt="CSV Data Medicine Plot" class="img-fluid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Modal for Age_plot.png -->
+                                <div class="modal fade" id="agePlotModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <img src="{{ '/media/plots/Age_plot.png' }}" alt="CSV Data Age Plot" class="img-fluid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Modal for medimanu_plot.png -->
+                                <div class="modal fade" id="medimanuPlotModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <img src="{{ '/media/plots/medimanu_plot.png' }}" alt="CSV Data Medimanu Plot" class="img-fluid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>     
                             </div>
                         </div>
-                    </div>
+                    </div> 
                 </div>
             </div>
             <script type="text/javascript" src="{% static 'assets/js/jquery/jquery.min.js'%}"></script>
             <script type="text/javascript" src="{% static 'assets/js/jquery-ui/jquery-ui.min.js'%}"></script>
             <script type="text/javascript" src="{% static 'assets/js/popper.js/popper.min.js'%}"></script>
             <script type="text/javascript" src="{% static 'assets/js/bootstrap/js/bootstrap.min.js'%}"></script>
-            <!-- jquery slimscroll js -->
-            <!-- <script type="text/javascript"
-                src="{% static 'assets/js/jquery-slimscroll/jquery.slimscroll.js'%}">
-            </script> -->
-            <!-- modernizr js -->
-            <!-- <script type="text/javascript" src="{% static 'assets/js/modernizr/modernizr.js'%}"></script> -->
-            <!-- am chart -->
-            <!-- <script src="{% static 'assets/pages/widget/amchart/amcharts.min.js'%}"></script> -->
-            <!-- <script src="{% static 'assets/pages/widget/amchart/serial.min.js'%}"></script> -->
-            <!-- Chart js -->
-            <!-- <script type="text/javascript" src="{% static 'assets/js/chart.js/Chart.js'%}"></script> -->
-            <!-- Todo js -->
-            <!-- <script type="text/javascript " src="{% static 'assets/pages/todo/todo.js'%} "></script> -->
-            <!-- Custom js -->
-            <!-- <script type="text/javascript" src="{% static 'assets/pages/dashboard/custom-dashboard.min.js'%}"></script> -->
             <script type="text/javascript" src="{% static 'assets/js/script.js'%}"></script>
-            <!-- <script type="text/javascript " src="{% static 'assets/js/SmoothScroll.js'%}"></script> -->
             <script src="{% static 'assets/js/pcoded.min.js'%}"></script>
             <script src="{% static 'assets/js/vartical-demo.js'%}"></script>
-            <!-- <script src="{% static 'assets/js/jquery.mCustomScrollbar.concat.min.js'%}"></script> -->
-        
-
     </body>
 
 </html>

@@ -1,20 +1,214 @@
 from django.shortcuts import render
-
 # Create your views here.
 def index(request):
     return  render(request,'index.html')
 
-### ---------------------------------------- File upload and Accespting --------------------------------------------------
+### ---------------------------------------- File upload and Accespting And Plotings------------------------------------------------
 
 from django.conf import settings
 import os
 import pandas as pd
-
-
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
 df = None  # Define the df variable in the outer scope
+
+def generate_bar_plot(df, plot_path):
+    
+ 
+    # Clean column names by removing leading/trailing spaces
+    df.columns = df.columns.str.strip()
+    
+    # Check if 'DOCTOR DEPARTMENT' is a valid column name
+    if 'Doctor Department' not in df.columns:
+        
+        return None  # Return None if the column doesn't exist
+    
+    # Group the data by 'DOCTOR DEPARTMENT' and count the occurrences
+    department_counts = df['Doctor Department'].value_counts()
+    
+    
+    # Create a bar plot
+    plt.figure(figsize=(10, 6))  # Adjust the figure size as needed
+    department_counts.plot(kind='barh')
+    plt.xlabel('Doctor Department')
+    plt.ylabel('Frequency')
+    plt.title('Doctor Department Frequency Bar Plot')
+
+    # Save the plot as an image
+    plt.tight_layout()
+    plt.savefig(plot_path)
+    plt.close()
+
+
+
+
+def generate_medicine_plot(df, plot_path):
+   
+ 
+    # Clean column names by removing leading/trailing spaces
+    df.columns = df.columns.str.strip()
+    
+    # Check if 'Medicine Name' is a valid column name
+    if 'Medicine Name' not in df.columns:
+        
+        return None  # Return None if the column doesn't exist
+    
+    # Group the data by 'DOCTOR DEPARTMENT' and count the occurrences
+    department_counts = df['Medicine Name'].value_counts()
+    
+    
+    # Create a bar plot
+    plt.figure(figsize=(10, 20))  # Adjust the figure size as needed
+    department_counts.plot(kind='barh')
+    plt.xlabel('Medicine Name')
+    plt.ylabel('Frequency')
+    plt.title('Medicine Name Frequency Bar Plot')
+
+    # Save the plot as an image
+    plt.tight_layout()
+    plt.savefig(plot_path)
+    plt.close()
+
+
+
+def generate_pie_chart(df, plot_path):
+    
+   
+    
+
+    # Clean column names by removing leading/trailing spaces
+    df.columns = df.columns.str.strip()
+
+    # Check if 'Gender' is a valid column name
+    if 'Gender' not in df.columns:
+        
+        return None  # Return None if the column doesn't exist
+
+    # Group the data by 'Gender' and count the occurrences
+    gender_counts = df['Gender'].value_counts()
+    
+
+    # Create a pie chart
+    plt.figure(figsize=(10, 6))  # Adjust the figure size as needed
+    gender_counts.plot(kind='pie', autopct='%1.1f%%')
+    plt.ylabel('')
+    plt.title('Gender Distribution Pie Chart')
+
+    # Save the plot as an image
+    plt.tight_layout()
+    plt.savefig(plot_path)
+    plt.close()
+
+
+def generate_Age_chart(df, plot_path):
+    
+   
+
+    # Clean column names by removing leading/trailing spaces
+    df.columns = df.columns.str.strip()
+
+    # Check if 'Gender' is a valid column name
+    if 'Age' not in df.columns:
+        
+        return None  # Return None if the column doesn't exist
+
+    # Group the data by 'Gender' and count the occurrences
+    gender_counts = df['Age'].value_counts()
+    
+
+    # Create a pie chart
+    plt.figure(figsize=(10, 10))  # Adjust the figure size as needed
+    gender_counts.plot(kind='pie', autopct='%1.1f%%')
+    plt.ylabel('')
+    plt.title('Age Distribution Pie Chart')
+
+    # Save the plot as an image
+    plt.tight_layout()
+    plt.savefig(plot_path)
+    plt.close()
+
+
+def generate_Disease_plot(df, plot_path):
+   
+ 
+    # Clean column names by removing leading/trailing spaces
+    df.columns = df.columns.str.strip()
+    
+    # Check if 'DOCTOR DEPARTMENT' is a valid column name
+    if 'Disease' not in df.columns:
+        return None  # Return None if the column doesn't exist
+    
+    # Group the data by 'DOCTOR DEPARTMENT' and count the occurrences
+    department_counts = df['Disease'].value_counts()
+    
+    
+    # Create a bar plot
+    plt.figure(figsize=(10, 15))  # Adjust the figure size as needed
+    department_counts.plot(kind='barh')
+    plt.xlabel('Disease')
+    plt.ylabel('Frequency')
+    plt.title('Disease Frequency Bar Plot')
+
+    # Save the plot as an image
+    plt.tight_layout()
+    plt.savefig(plot_path)
+    plt.close()
+
+def generate_MedicineManufacturer_plot(df, plot_path):
+   
+ 
+    # Clean column names by removing leading/trailing spaces
+    df.columns = df.columns.str.strip()
+    
+    # Check if 'Doctor Name' is a valid column name
+    if 'Medicine Manufacturer' not in df.columns:
+        return None  # Return None if the column doesn't exist
+    
+    # Group the data by 'Doctor Name' and count the occurrences
+    department_counts = df['Medicine Manufacturer'].value_counts()
+    
+    
+    # Create a bar plot
+    plt.figure(figsize=(10, 15))  # Adjust the figure size as needed
+    department_counts.plot(kind='barh')
+    plt.xlabel('Medicine Manufacturer')
+    plt.ylabel('Frequency')
+    plt.title('Medicine Manufacturer Frequency Bar Plot')
+
+    # Save the plot as an image
+    plt.tight_layout()
+    plt.savefig(plot_path)
+    plt.close()
+import shutil
 
 def upload_file(request):
     global df  # Use the global keyword to access the outer scope df variable
+    # Clear the media directory (except the plots folder)
+    media_root = settings.MEDIA_ROOT
+    for filename in os.listdir(media_root):
+        if filename != 'plots':
+            file_path = os.path.join(media_root, filename)
+            try:
+                if os.path.isfile(file_path):
+                    os.unlink(file_path)
+                elif os.path.isdir(file_path):
+                    shutil.rmtree(file_path)
+            except Exception as e:
+                return render(request, 'upload.html', {'error_message': f'Error clearing media directory: {e}'})
+
+    # Clear the plots folder
+    plots_path = os.path.join(media_root, 'plots')
+    for filename in os.listdir(plots_path):
+        file_path = os.path.join(plots_path, filename)
+        try:
+            if os.path.isfile(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+        except Exception as e:
+            return render(request, 'upload.html', {'error_message': f'Error clearing plots folder: {e}'})
+
     
     if request.method == 'POST' and request.FILES.get('file'):
         uploaded_file = request.FILES['file']
@@ -38,16 +232,53 @@ def upload_file(request):
             return render(request, 'upload.html', {'error_message': f'Error reading file: {e}'})
         dataset_size = len(df)
         
-        # Pass the dataset size to the template context
+        # Generate the bar plot
+        plot_path = os.path.join(media_root,'plots', 'bar_plot.png')
+        plot_path1 = os.path.join(media_root, 'plots', 'pie_plot.png')
+        plot_path2 = os.path.join(media_root, 'plots', 'Disease_plot.png')
+        plot_path3 = os.path.join(media_root, 'plots', 'Medicine_plot.png')
+        plot_path4 = os.path.join(media_root, 'plots', 'Age_plot.png')
+        plot_path5 = os.path.join(media_root, 'plots', 'medimanu_plot.png')
+
+
+
+  
+        generate_bar_plot(df, plot_path)
+        generate_pie_chart(df, plot_path1)
+        generate_Disease_plot(df, plot_path2)
+        generate_medicine_plot(df, plot_path3)
+        generate_Age_chart(df, plot_path4)
+        generate_MedicineManufacturer_plot(df, plot_path5)
+
+
+
+        if not os.path.exists(plot_path):
+            return render(request, 'upload.html', {'error_message': 'Column name "DOCTOR DEPARTMENT" not found in the file.'})
+        
+        # Pass the dataset size and plot_path to the template context
         context = {
             'dataset_size': dataset_size,
+            'plot_path': 'bar_plot.png', 
+            'plot_path1': 'pie_plot.png',
+            'plot_path2': 'Disease_plot.png', # Adjust the path as needed
+            'plot_path3': 'Medicine_plot.png',
+            'plot_path4': 'Age_plot.png',
+            'plot_path5': 'medimanu_plot.png',
+
+
+             
         }
-        print('jkjlkj',context)
-        return render(request, 'index.html', context) 
+        
+        return render(request, 'index.html', context)
     
     return render(request, 'upload.html')
 
+
 ###----------------------------------------------------- End of File upload and Accespting --------------------------------------------------
+
+
+
+
 ### ----------------------------------------------------- Dataset Printing -------------------------------------------------------------------
 
 def read_data_from_file1(file_path):
@@ -64,16 +295,26 @@ def read_data_from_file1(file_path):
 def get_most_recent_file():
     media_folder = os.path.join(settings.MEDIA_ROOT)
     files = [f for f in os.listdir(media_folder) if os.path.isfile(os.path.join(media_folder, f))]
+
+    if not files:
+        raise ValueError("No files found,Please upload Your Data file")
+
     most_recent_file = max(files, key=lambda f: os.path.getmtime(os.path.join(media_folder, f)))
     return os.path.join(media_folder, most_recent_file)
 
 def show_data(request):
-    file_path = get_most_recent_file()
-    data = read_data_from_file1(file_path)
-    context = {'data': data}
+    try:
+        file_path = get_most_recent_file()
+        data = read_data_from_file1(file_path)
+        context = {'data': data}
+    except ValueError as e:
+        context = {'error_message': str(e)}
+    
     return render(request, 'data_display.html', context)
 
+
 ###----------------------------------------------------- End of Dataset Printing -------------------------------------------------------------
+
 
 
 
@@ -197,7 +438,7 @@ def process_question(input_sentence):
     user_input_embedding = model.encode(corrected_user_input, convert_to_tensor=True)
     reference_question_embeddings = model.encode(reference_questions, convert_to_tensor=True)
     similarity_scores = util.pytorch_cos_sim(user_input_embedding, reference_question_embeddings)[0]
-    print(corrected_user_input)
+    
     for i,score in enumerate(similarity_scores):
         if score > 0.4:  # 40% similarity threshold
             # Step 3: Replace the following code with your data loading and processing logic
@@ -205,15 +446,13 @@ def process_question(input_sentence):
             data = read_data_from_file1(file_path)  # Replace with your data loading logic
 
             # Step 4: Forward the question to the question answering model (using PandasAI)
-
-            API_key="{API_key}"
+            API_key=os.environ.get('API_key')
             llm = Starcoder(api_token=API_key)
             pandas_ai = PandasAI(llm, conversational=False, verbose=True)
 
             # Assuming you have a DataFrame 'data_frame' from your data loading
             response = pandas_ai.run(data, prompt=corrected_user_input)
-            print('typeeeeeeeeee',type(response))
-            print(response,'resssssssssssssssssssss')
+            
             if isinstance(response, int) or isinstance(response, float):
                 # If the response is int or float, convert it to str
                 response_html = str(response)
@@ -253,7 +492,9 @@ def get_response(request):
     return JsonResponse({"error": "Invalid request method"})
 
 
- #--------------------------------------------------- Help section ------------------------------------------------------------
+#--------------------------------------------------- Help section ------------------------------------------------------------
+
+
 def how_to_use(request):
     return render(request,'instruction.html')
 def prompts(request):
