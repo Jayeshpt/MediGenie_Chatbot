@@ -1,0 +1,307 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>MidGenie</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description"
+        content="Gradient Able Bootstrap admin template made using Bootstrap 4. The starter version of Gradient Able is completely free for personal project." />
+    <meta name="keywords"
+        content="free dashboard template, free admin, free bootstrap template, bootstrap admin template, admin theme, admin dashboard, dashboard template, admin template, responsive" />
+    <meta name="author" content="codedthemes">
+    <!-- Favicon icon -->
+    <link rel="icon" href="{% static 'assets/images/favicon.ico'%}" type="image/x-icon">
+    <!-- Google font-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+    <!-- Required Fremwork -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap/css/bootstrap.min.css'%}">
+    <!-- themify-icons line icon -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/icon/themify-icons/themify-icons.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/icon/font-awesome/css/font-awesome.min.css'%}">
+    <!-- ico font -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/icon/icofont/css/icofont.css'%}">
+    <!-- Style.css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css'%}">
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/jquery.mCustomScrollbar.css'%}">
+    
+
+</head>
+
+<body>
+
+    <body>
+       
+        <!-- Pre-loader start -->
+        <div class="theme-loader">
+            <div class="loader-track">
+                <div class="loader-bar"></div>
+            </div>
+        </div>
+        <!-- Pre-loader end -->
+        <div id="pcoded" class="pcoded">
+            <div class="pcoded-overlay-box"></div>
+            <div class="pcoded-container navbar-wrapper">
+
+                <nav class="navbar header-navbar pcoded-header">
+                    <div class="navbar-wrapper">
+                        <div class="navbar-logo">
+                            <a class="mobile-menu" id="mobile-collapse" href="#!">
+                                <i class="ti-menu"></i>
+                            </a>
+                            <h6 style="color: aliceblue;margin-left: 50px;margin-top: 13px;" class='medi'>MediGinie</h6>
+                            <a class="mobile-options">
+                                <i class="ti-more"></i>
+                            </a>
+                        </div>
+
+                        <div class="navbar-container container-fluid">
+                            <ul class="nav-left">
+                                <li>
+                                    <div class="sidebar_toggle"><a href="javascript:void(0)"><i class="ti-menu"></i></a>
+                                    </div>
+                                </li>
+                                
+                                <li style="margin-top: 5px;">
+                                    <a href="#!" onclick="javascript:toggleFullScreen()" style="margin-left: -18px;">
+                                        <i class="ti-fullscreen"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav-right">
+                       
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <div class="pcoded-main-container">
+                    <div class="pcoded-wrapper">
+                        <nav class="pcoded-navbar">
+                            <div class="sidebar_toggle"><a href="#"><i class="icon-close icons"></i></a></div>
+                            <div class="pcoded-inner-navbar main-menu">
+
+                                <div class="pcoded-navigatio-lavel" data-i18n="nav.category.navigation"></div>
+                                <ul class="pcoded-item pcoded-left-item">
+                                    <li class="active">
+                                        <li class="pcoded-hasmenu">
+                                            <a href="{% url 'upload_file' %}">
+                                                <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>D</b></span>
+                                                <span class="pcoded-mtext"
+                                                    data-i18n="nav.dash.main">Upload Your Data</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                            <li>
+                                                <a href="{% url 'show_data' %}">
+                                                    <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+                                                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Data
+                                                        Table</span>
+                                                    <span class="pcoded-mcaret"></span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'chatbot' %}">
+                                                    <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+                                                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">chat with me</span>
+                                                    <span class="pcoded-mcaret"></span>
+                                                </a>
+                                            </li>
+                                            <ul class="pcoded-submenu">
+                        
+                                            </ul>
+                                        </li>
+                                    </li>
+                                    
+                                </ul>
+                                <div class="pcoded-navigatio-lavel" data-i18n="nav.category.forms">Help
+                                </div>
+                                <ul class="pcoded-item pcoded-left-item">
+                                    <li>
+                                        
+                                    </li>
+                                    <li class="pcoded-hasmenu">
+                                        <a href="javascript:void(0)">
+                                            <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
+                                            <span class="pcoded-mtext"
+                                                data-i18n="nav.basic-components.main">Guide</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                        <ul class="pcoded-submenu">
+                                            <li class=" ">
+                                                <a href="{% url 'how_to_use' %}">
+                                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                    <span class="pcoded-mtext"
+                                                        data-i18n="nav.basic-components.alert">How to use</span>
+                                                    <span class="pcoded-mcaret"></span>
+                                                </a>
+                                            </li>
+                                            <li class=" ">
+                                                <a href="{% url 'prompts' %}">
+                                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                    <span class="pcoded-mtext"
+                                                        data-i18n="nav.basic-components.breadcrumbs">Prompts</span>
+                                                    <span class="pcoded-mcaret"></span>
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                </ul>
+                                </ul>
+                                </li>
+                                </ul>
+                            </div>
+                        </nav>
+                        <div class="pcoded-content">
+                            <div style="padding-top: 20px;">
+                                <h2 style="text-align: center;">Graphical Representation of Your data</h2>
+                            </div>
+                            <div class="pcoded-inner-content" style="padding-top: 30px;" >
+                                <div class="container">
+                                    
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="card" data-toggle="modal" data-target="#piePlotModal">
+                                                <img src="{{ '/media/plots/pie_plot.png' }}" alt="CSV Data Pie Plot" class="card-img-top img-fluid">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Gender Statistics</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card" data-toggle="modal" data-target="#barPlotModal">
+                                                <img src="{{ '/media/plots/bar_plot.png' }}" alt="CSV Data Bar Plot" class="card-img-top img-fluid">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Doctor Department Statistics</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card" data-toggle="modal" data-target="#diseasePlotModal">
+                                                <img src="{{ '/media/plots/Disease_plot.png' }}" alt="CSV Data Disease Plot" class="card-img-top img-fluid" style="max-height: 207px;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Disease Statistics</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card" data-toggle="modal" data-target="#medicinePlotModal">
+                                                <img src="{{ '/media/plots/Medicine_plot.png' }}" alt="CSV Data Disease Plot" class="card-img-top img-fluid" style="max-height: 207px;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">medicine Statistics</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card" data-toggle="modal" data-target="#agePlotModal">
+                                                <img src="{{ '/media/plots/Age_plot.png' }}" alt="CSV Data Disease Plot" class="card-img-top img-fluid" style="max-height: 207px;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Age Statistics</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card" data-toggle="modal" data-target="#medimanuPlotModal">
+                                                <img src="{{ '/media/plots/medimanu_plot.png' }}" alt="CSV Data Disease Plot" class="card-img-top img-fluid" style="max-height: 207px;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">MedicineManufacturer Statistics</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            
+                                <!-- Modal for Pie Plot -->
+                                <div class="modal fade" id="piePlotModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <img src="{{ '/media/plots/pie_plot.png' }}" alt="CSV Data Pie Plot" class="img-fluid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <!-- Modal for Bar Plot -->
+                                <div class="modal fade" id="barPlotModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <img src="{{ '/media/plots/bar_plot.png' }}" alt="CSV Data Bar Plot" class="img-fluid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <!-- Modal for Disease Plot -->
+                                <div class="modal fade" id="diseasePlotModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <img src="{{ '/media/plots/Disease_plot.png' }}" alt="CSV Data Disease Plot" class="img-fluid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal for Disease Plot -->
+                                <div class="modal fade" id="diseasePlotModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <img src="{{ '/media/plots/Disease_plot.png' }}" alt="CSV Data Disease Plot" class="img-fluid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Modal for Medicine_plot.png -->
+                                <div class="modal fade" id="medicinePlotModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <img src="{{ '/media/plots/medicine_plot.png' }}" alt="CSV Data Medicine Plot" class="img-fluid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Modal for Age_plot.png -->
+                                <div class="modal fade" id="agePlotModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <img src="{{ '/media/plots/Age_plot.png' }}" alt="CSV Data Age Plot" class="img-fluid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Modal for medimanu_plot.png -->
+                                <div class="modal fade" id="medimanuPlotModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <img src="{{ '/media/plots/medimanu_plot.png' }}" alt="CSV Data Medimanu Plot" class="img-fluid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>     
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            <script type="text/javascript" src="{% static 'assets/js/jquery/jquery.min.js'%}"></script>
+            <script type="text/javascript" src="{% static 'assets/js/jquery-ui/jquery-ui.min.js'%}"></script>
+            <script type="text/javascript" src="{% static 'assets/js/popper.js/popper.min.js'%}"></script>
+            <script type="text/javascript" src="{% static 'assets/js/bootstrap/js/bootstrap.min.js'%}"></script>
+            <script type="text/javascript" src="{% static 'assets/js/script.js'%}"></script>
+            <script src="{% static 'assets/js/pcoded.min.js'%}"></script>
+            <script src="{% static 'assets/js/vartical-demo.js'%}"></script>
+    </body>
+
+</html>

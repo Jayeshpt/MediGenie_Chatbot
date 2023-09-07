@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Display</title>
+    <link rel="stylesheet" href="{% static 'assets/data_display.css' %}">
+    <style>
+        .error-message {
+            color: rgb(75, 5, 5);
+            text-align: center;
+            font-size: 50px;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        {% if error_message %}
+            <div class="error-message">
+                <p>{{ error_message }}</p>
+            </div>
+        {% else %}
+            <h1>Your Medical Dataset</h1>
+            <div class="tbl-header">
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <thead>
+                        <tr>
+                            {% for column in data.columns %}
+                            <th>{{ column }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="tbl-content">
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tbody>
+                        {% for _, row in data.iterrows %}
+                        <tr>
+                            {% for value in row %}
+                            <td>{{ value }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </section>
+    <script src="{% static 'assets/js/data_display.js' %}"></script>
+</body>
+</html>
