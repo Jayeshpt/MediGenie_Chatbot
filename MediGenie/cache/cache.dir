@@ -7,3 +7,5 @@
 'Please provide the count of male patients ?', (3072, 39)
 'Which is the most frequent doctor?', (3584, 84)
 'Who is the most frequent doctor?', (4096, 84)
+'Which is the most frequent disease.', (4608, 43)
+'Who is the most weighted patient?', (5120, 61)
