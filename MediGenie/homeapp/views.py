@@ -282,25 +282,29 @@ def upload_file(request):
 ### ----------------------------------------------------- Dataset Printing -------------------------------------------------------------------
 
 def read_data_from_file1(file_path):
-    if file_path.endswith('.csv'):
-        data = pd.read_csv(file_path)
-    elif file_path.endswith('.xlsx') or file_path.endswith('.xls'):
-        data = pd.read_excel(file_path)
-    else:
-        raise ValueError("Unsupported file format")
-
-    return data
-
+    try:
+        if file_path.endswith('.csv'):
+            data = pd.read_csv(file_path)
+        elif file_path.endswith('.xlsx') or file_path.endswith('.xls'):
+            data = pd.read_excel(file_path)
+        else:
+            raise ValueError("Unsupported file format")
+        return data
+    except Exception as e:
+        raise ValueError(f"Error reading file: {str(e)}")
 
 def get_most_recent_file():
-    media_folder = os.path.join(settings.MEDIA_ROOT)
-    files = [f for f in os.listdir(media_folder) if os.path.isfile(os.path.join(media_folder, f))]
+    try:
+        media_folder = os.path.join(settings.MEDIA_ROOT)
+        files = [f for f in os.listdir(media_folder) if os.path.isfile(os.path.join(media_folder, f))]
 
-    if not files:
-        raise ValueError("No files found,Please upload Your Data file")
+        if not files:
+            raise ValueError("No files found, please upload your data file")
 
-    most_recent_file = max(files, key=lambda f: os.path.getmtime(os.path.join(media_folder, f)))
-    return os.path.join(media_folder, most_recent_file)
+        most_recent_file = max(files, key=lambda f: os.path.getmtime(os.path.join(media_folder, f)))
+        return os.path.join(media_folder, most_recent_file)
+    except Exception as e:
+        raise ValueError(f"Error while fetching most recent file: {str(e)}")
 
 def show_data(request):
     try:
@@ -340,8 +344,8 @@ load_dotenv()
 
 
 def process_question(input_sentence):
-    # Define reference questions
-    reference_questions = [
+    try:
+        reference_questions = [
     "print piechart over gender column",
     "who is the highest aged person",
     "which is the most frequent address?",
@@ -422,63 +426,60 @@ def process_question(input_sentence):
     "Recommend medicines suitable for a patient in their 40s who is diagnosed with 'Depression.'"
     ]
 
-    # Step 1: Receive the input sentence
-    user_input = input_sentence.strip()
 
-    # Step 2: Correct any spelling and grammar mistakes (using HappyTextToText)
-    happy_tt = HappyTextToText("T5", "vennify/t5-base-grammar-correction")
-    args = TTSettings(num_beams=5, min_length=1)
-    result = happy_tt.generate_text("grammar: " + user_input, args=args)
-    corrected_user_input = result.text
+        user_input = input_sentence.strip()
 
-    # Load the SentenceTransformer model for similarity calculation
-    model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+        happy_tt = HappyTextToText("T5", "vennify/t5-base-grammar-correction")
+        args = TTSettings(num_beams=5, min_length=1)
+        result = happy_tt.generate_text("grammar: " + user_input, args=args)
+        corrected_user_input = result.text
 
-    # Calculate similarity scores with all reference questions
-    user_input_embedding = model.encode(corrected_user_input, convert_to_tensor=True)
-    reference_question_embeddings = model.encode(reference_questions, convert_to_tensor=True)
-    similarity_scores = util.pytorch_cos_sim(user_input_embedding, reference_question_embeddings)[0]
-    
-    for i,score in enumerate(similarity_scores):
-        if score > 0.4:  # 40% similarity threshold
-            # Step 3: Replace the following code with your data loading and processing logic
-            file_path = get_most_recent_file()  # Replace with your file path logic
-            data = read_data_from_file1(file_path)  # Replace with your data loading logic
+        model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
 
-            # Step 4: Forward the question to the question answering model (using PandasAI)
-            API_key=os.environ.get('API_key')
-            llm = Starcoder(api_token=API_key)
-            pandas_ai = PandasAI(llm, conversational=False, verbose=True)
+        user_input_embedding = model.encode(corrected_user_input, convert_to_tensor=True)
+        reference_question_embeddings = model.encode(reference_questions, convert_to_tensor=True)
+        similarity_scores = util.pytorch_cos_sim(user_input_embedding, reference_question_embeddings)[0]
 
-            # Assuming you have a DataFrame 'data_frame' from your data loading
-            response = pandas_ai.run(data, prompt=corrected_user_input)
-            
-            if isinstance(response, int) or isinstance(response, float):
-                # If the response is int or float, convert it to str
-                response_html = str(response)
-            elif isinstance(response, str):
-                # Response is already a string, no conversion needed
-                response_html = response
-            elif isinstance(response, pd.DataFrame):
-                # Response is a DataFrame, render it as a table
-                response_html = response.to_html(classes='table table-bordered', index=False)
-            elif isinstance(response, pd.Series):
-                # Response is a Series, convert it to a DataFrame and then render as a table
-                response_df = pd.DataFrame({'': response.index, 'Count': response.values})
-                response_html = response_df.to_html(classes='table table-bordered', index=False)
-            else:
-                # Response is not handled, convert it to a string
-                response_html = str(response)
+        for i, score in enumerate(similarity_scores):
+            if score > 0.4:
+                try:
+                    file_path = get_most_recent_file()
+                    data = read_data_from_file1(file_path)
 
-            # Return a JSON response
-            return JsonResponse({'response': response_html})
+                    if data is None or len(data) == 0:
+                        error_message = "Upload a data file to proceed."
+                        return JsonResponse({"error": error_message})
 
-         
+                    API_key = os.environ.get('API_key')
+                    llm = Starcoder(api_token=API_key)
+                    pandas_ai = PandasAI(llm, conversational=False, verbose=True)
 
-    # No matching question found
-    error_message = "Your question doesn't meet the similarity threshold."
-    return JsonResponse({"error": error_message})
+                    response = pandas_ai.run(data, prompt=corrected_user_input)
 
+                    if isinstance(response, int) or isinstance(response, float):
+                        response_html = str(response)
+                    elif isinstance(response, str):
+                        response_html = response
+                    elif isinstance(response, pd.DataFrame):
+                        response_html = response.to_html(classes='table table-bordered', index=False)
+                    elif isinstance(response, pd.Series):
+                        response_df = pd.DataFrame({'': response.index, 'Count': response.values})
+                        response_html = response_df.to_html(classes='table table-bordered', index=False)
+                    else:
+                        response_html = str(response)
+
+                    return JsonResponse({'response': response_html})
+
+                except Exception as e:
+                    error_message = f"An error occurred while processing the question: {str(e)}"
+                    return JsonResponse({"error": error_message})
+
+        error_message = "Your question doesn't meet the similarity threshold."
+        return JsonResponse({"error": error_message})
+
+    except Exception as e:
+        error_message = f"An error occurred: {str(e)}"
+        return JsonResponse({"error": error_message})
 
 
 @csrf_exempt  # To disable CSRF protection for this view (for demonstration purposes)

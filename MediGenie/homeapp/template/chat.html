@@ -73,6 +73,7 @@
 						type: "POST",
 						url: "/get_response",
 					}).done(function (data) {
+						console.log(data);
 						console.log('Response Type:', data.response);
 						document.getElementById('chatResLoader').remove()
 
@@ -86,7 +87,7 @@
 								$("#messageFormeight").append($.parseHTML(botHtml));
 							}
 						} else {
-							var botHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://www.shutterstock.com/shutterstock/photos/287587964/display_1500/stock-vector-medical-pharmacy-logo-design-template-vector-illustrator-287587964.jpg" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">No response received.<span class="msg_time">' + str_time + '</span></div></div>';
+							var botHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://www.shutterstock.com/shutterstock/photos/287587964/display_1500/stock-vector-medical-pharmacy-logo-design-template-vector-illustrator-287587964.jpg" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">'+data.error+'<span class="msg_time">' + str_time + '</span></div></div>';
 							$("#messageFormeight").append($.parseHTML(botHtml));
 						}
 					});
