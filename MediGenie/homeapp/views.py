@@ -502,32 +502,3 @@ def prompts(request):
 
 
 
-# ____________________________________ clean up files __________________________________________________
-from django.views.decorators.csrf import csrf_exempt
-def cleanup(request):
-    media_root = settings.MEDIA_ROOT
-    # Delete files in 'media' folder (excluding 'plots')
-    for filename in os.listdir(media_root):
-        if filename != 'plots':
-            file_path = os.path.join(media_root, filename)
-            try:
-                if os.path.isfile(file_path):
-                    os.unlink(file_path)
-                elif os.path.isdir(file_path):
-                    shutil.rmtree(file_path)
-            except Exception as e:
-                print(f'Error deleting file/folder: {e}')
-
-    # Delete files inside 'plots' subfolder
-    plots_path = os.path.join(media_root, 'plots')
-    for filename in os.listdir(plots_path):
-        file_path = os.path.join(plots_path, filename)
-        try:
-            if os.path.isfile(file_path):
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
-        except Exception as e:
-            print(f'Error deleting file/folder: {e}')
-
-    return JsonResponse({'message': 'Cleanup successful'})
